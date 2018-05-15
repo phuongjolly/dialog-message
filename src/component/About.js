@@ -1,34 +1,30 @@
 import React from "react";
-import DialogMessage from "./DialogMessage";
+import store from "./stores/store";
+import {show} from "./stores/dialogReducer";
+import {Redirect} from "react-router-dom";
 
 class About extends React.Component{
     state = {
         back: false,
-        showDialog: false
     }
 
     goBack(){
         this.setState({
-            back: true,
-            showDialog: true
+            back: true
         });
-    }
 
-    closeDialog() {
-        this.setState({
-            showDialog: false
-        })
+        store.dispatch(show("This post is no longer in database."));
     }
 
     render() {
-
+        if(this.state.back) {
+            return <Redirect to={"/"} />
+        }
         return (
             <div>
                 <h1>About</h1>
                 <button onClick={() => this.goBack()}>Back</button>
-                <DialogMessage show={this.state.showDialog} closeDialog={() => this.closeDialog()}>
-                    That post is no longer in database.
-                </DialogMessage>
+
             </div>
         );
     }
