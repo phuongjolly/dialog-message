@@ -1,21 +1,34 @@
 import React from "react";
-import {Redirect} from "react-router-dom";
+import DialogMessage from "./DialogMessage";
 
 class About extends React.Component{
     state = {
-        back: false
+        back: false,
+        showDialog: false
     }
+
     goBack(){
-        this.setState({back: true});
+        this.setState({
+            back: true,
+            showDialog: true
+        });
     }
+
+    closeDialog() {
+        this.setState({
+            showDialog: false
+        })
+    }
+
     render() {
-        if(this.state.back) {
-            return <Redirect to="/"/>
-        }
+
         return (
             <div>
                 <h1>About</h1>
                 <button onClick={() => this.goBack()}>Back</button>
+                <DialogMessage show={this.state.showDialog} closeDialog={() => this.closeDialog()}>
+                    That post is no longer in database.
+                </DialogMessage>
             </div>
         );
     }
